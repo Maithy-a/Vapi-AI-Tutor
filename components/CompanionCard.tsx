@@ -19,7 +19,7 @@ export default function CompanionCard({ id, name, topic, subject, duration, colo
                 <div className="subject-badge">{subject}</div>
                 <Button
                     size="icon"
-                    className="companion-bookmark rounded-full">
+                    className="companion-bookmark">
                     <Image
                         src="/icons/bookmark.svg"
                         alt="Bookmark"
@@ -41,8 +41,8 @@ export default function CompanionCard({ id, name, topic, subject, duration, colo
                 </p>
             </div>
             <Link href={`/companions/${id}`}>
-                <Button variant="default" className="w-full rounded-3xl justify-center" >
-                    Lauch Lesson
+                <Button variant="default" className="w-full rounded-xl justify-center" >
+                    Launch Lesson
                 </Button>
             </Link >
         </article>
