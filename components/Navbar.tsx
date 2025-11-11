@@ -3,6 +3,8 @@ import Link from "next/link";
 import NavItems from "@/components/NavItems";
 import { Button } from "@/components/ui/button";
 
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 export default function Navbar() {
     return (
         <nav className="navbar" >
@@ -18,11 +20,16 @@ export default function Navbar() {
                     </div>
                 </Link>
                 <NavItems />
-                <div className="flex items-center gap-8">
-                    <Button size="lg" className="px-6" >
-                        Sign In
-                    </Button>
-                </div>
+                <SignedOut>
+                    <SignInButton>
+                        <Button className="px-6 rounded-xl capitalize" >
+                            sign in
+                        </Button>
+                    </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
             </div>
         </nav>
     );

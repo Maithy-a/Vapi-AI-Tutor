@@ -30,6 +30,8 @@ import { Textarea } from "@/components/ui/textarea"
 
 import { useState } from "react"
 import { Loader } from "lucide-react"
+import { createCompanion } from "@/lib/actions/companion.actions"
+import { redirect } from "next/navigation"
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Companion name required" }),
@@ -57,15 +59,13 @@ export default function CompanionForm() {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         setIsLoading(true);
-        try {
-            console.log("Submitted values:", values);
-            setTimeout(() => {
-                console.log("Companion created successfully!");
-                setIsLoading(false);
-            }, 2000);
-        } catch (error) {
-            console.error("Failed to create companion:", error);
-            setIsLoading(false);
+        const companion = await createCompanion(values);
+
+        if (companion) {
+            redirect(`/companions/${companion.id}`);
+        } else {
+            console.log('Failed to create a companion');
+            redirect('/');
         }
     };
 

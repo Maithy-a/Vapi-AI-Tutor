@@ -1,5 +1,12 @@
+import { PricingTable } from "@clerk/nextjs";
+
 export default function Subscription() {
     return (
-        <h1>Subscription Page</h1>
+        <main>
+            <h1>Subscription Page</h1>
+            <div>
+                <PricingTable />
+            </div>
+        </main>
     )
 }
