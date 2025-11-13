@@ -1,27 +1,23 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const dmSans = Inter({
   subsets: ["latin"],
-});
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Vapi-ai-tutor",
-  description: "Real-time AI Teaching Platform",
+  title: "Mentra - AI Teaching Platform",
+  description: "An AI-powered platform to create personalized AI tutors for enhanced learning experiences.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en">
-      <body className={`${bricolage.variable} antialiased`}>
+      <body className={`${dmSans.className} antialiased`}>
         <ClerkProvider appearance={{ variables: { colorPrimary: "#fe5933" } }} >
           <Navbar />
           {children}

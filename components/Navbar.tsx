@@ -19,7 +19,7 @@ export default function Navbar() {
                         priority
                     />
                     <span className="font-semibold text-2xl hidden sm:inline-block">
-                        AI Tutor
+                        Mentra
                     </span>
                 </Link>
 

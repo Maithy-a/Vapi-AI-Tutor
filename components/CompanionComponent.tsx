@@ -167,9 +167,10 @@ export default function CompanionComponent({ companionId, subject, name, topic, 
                             className={cn(
                                 'rounded-lg cursor-pointer transition-colors w-full',
                                 callStatus === CallStatus.ACTIVE ? 'bg-rose-500 hover:bg-rose-500 text-white'
-                                    : callStatus === CallStatus.CONNECTING ? 'bg-yellow-400 hover:bg-yellow-400 text-white cursor-not-allowed'
+                                    : callStatus === CallStatus.CONNECTING ? 'bg-gold hover:bg-gold text-white cursor-not-allowed'
                                         : ''
                             )} onClick={callStatus === CallStatus.ACTIVE ? handleDisconnect : handleCall}
+                            disabled={callStatus === CallStatus.CONNECTING}
                         >
                             {callStatus === CallStatus.CONNECTING ? (
                                 <span className="flex gap-3">
