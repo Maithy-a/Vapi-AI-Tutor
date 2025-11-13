@@ -1,7 +1,90 @@
-export default function Profile() {
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+import { getUserCompanions, getUserSessions } from "@/lib/actions/companion.actions";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import Image from "next/image";
+import { CircleCheck, GraduationCap } from "lucide-react";
+import CompanionsList from "@/components/CompanionsList";
+
+
+export default async function Profile() {
+
+    const user = await currentUser();
+
+    if (!user) {
+        redirect('/sign-in');
+    }
+
+
+    const companions = await getUserCompanions(user.id);
+    const sessionHistory = await getUserSessions(user.id);
+
     return (
-        <main>
-            <h1>My Journey Page</h1>
+        <main className="lg:w-3/4" >
+            <section className="flex justify-between gap-4 max-sm:flex-col items-center">
+                <div className="flex gap-4 items-center">
+                    <Image
+                        src={user.imageUrl}
+                        alt={user.firstName!}
+                        width={110}
+                        height={110}
+                    />
+                    <div className="flex flex-col gap-2">
+                        <h1 className="font-bold text-2xl">
+                            {user.firstName} {user.lastName}
+                        </h1>
+                        <p className="text-sm text-muted-foreground">
+                            {user.emailAddresses[0].emailAddress}
+                        </p>
+                    </div>
+                </div>
+                <div className="flex gap-4" >
+                    <div className="border border-gray-300 rounded-2xl p-3 flex flex-col gap-2 h-fit">
+                        <div className="flex items-center gap-2">
+                            <CircleCheck className="text-primary w-6 h-6" />
+                            <p className="text-xl font-bold">
+                                {sessionHistory.length}
+                            </p>
+                        </div>
+                        <div>Lessons completed</div>
+                    </div>
+                    <div className="border border-gray-300 rounded-2xl p-3 flex flex-col gap-2 h-fit">
+                        <div className="flex items-center gap-2">
+                            <GraduationCap className="text-primary w-6 h-6" />
+                            <p className="text-xl font-bold">
+                                {companions.length}
+                            </p>
+                        </div>
+                        <div>Companions created</div>
+                    </div>
+                </div>
+            </section>
+            <Accordion type="multiple">
+                <AccordionItem value="recent">
+                    <AccordionTrigger className="text-2xl font-bold">
+                        Recent Sessions
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <CompanionsList
+                            title="Recent Sessions"
+                            companions={sessionHistory}
+                        />
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="companions">
+                    <AccordionTrigger className="text-2xl font-bold">
+                        My Companions {`(${companions.length})`}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <CompanionsList title="My Companions" companions={companions} />
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
         </main>
     )
 }

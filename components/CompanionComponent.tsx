@@ -68,6 +68,7 @@ export default function CompanionComponent({ companionId, subject, name, topic, 
             vapi.off('message', onMessage);
             vapi.off('error', onCallError);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const toggleMicrophone = () => {
